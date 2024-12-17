@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Chat em Tempo Real</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const socket = io();
+            const form = document.getElementById('form');
+            const input = document.getElementById('input');
+            const messagesList = document.getElementById('messages');
+
+            // Carrega mensagens existentes ao iniciar
+            fetch('/messages')
+                .then(response => response.json())
+                .then(messages => {
+                    messages.forEach(msg => {
+                        const item = document.createElement('li');
+                        item.textContent = msg;
+                        messagesList.appendChild(item);
+                    });
+                });
+
+            form.addEventListener('submit', function(e) {
+                e.preventDefault(); // Previne o comportamento padrão do formulário
+                if (input.value) {
+                    socket.emit('chat message', input.value); // Envia a mensagem para o servidor
+                    input.value = ''; // Limpa o campo de entrada
+                }
+            });
+
+            // Recebe mensagens do servidor e as exibe na lista
+            socket.on('chat message', function(msg) {
+                const item = document.createElement('li');
+                item.textContent = msg;
+                messagesList.appendChild(item);
+                window.scrollTo(0, document.body.scrollHeight); // Rola para a parte inferior da lista
+            });
+        });
+    </script>
+</head>
+<body>
+    <ul id="messages"></ul>
+    <form id="form" action="">
+        <input id="input" autocomplete="off" placeholder="Digite sua mensagem..." /><button>Enviar</button>
+    </form>
+</body>
+</html>

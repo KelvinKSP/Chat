@@ -1,0 +1,26 @@
+/* styles.css */
+.overflow-container {
+    overflow-y: auto;
+    scrollbar-width: thin; /* Para navegadores baseados em Firefox */
+    scrollbar-color: #fff #ffffff00;
+  }
+  
+  /* Estilo para o Chrome, Edge e outros baseados em Webkit */
+  .overflow-container::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  .overflow-container::-webkit-scrollbar-thumb {
+    background-color: #90cdf4; /* Azul claro */
+    border-radius: 8px;
+  }
+  
+  .overflow-container::-webkit-scrollbar-thumb:hover {
+    background-color: #63b3ed; /* Azul mais escuro ao passar o mouse */
+  }
+  
+  .overflow-container::-webkit-scrollbar-track {
+    background-color: #edf2f7; /* Fundo do trilho */
+  }
+  
+  
